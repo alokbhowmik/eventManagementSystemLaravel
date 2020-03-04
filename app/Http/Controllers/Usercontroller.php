@@ -20,56 +20,89 @@ class Usercontroller extends Controller
     //
     function saveUserData(Request $request)
     {
-        $this->user->firstname = $request->input('firstname');
-        $this->user->lastname = $request->input('lastname');
-        $this->user->email = $request->input('email');
-        $this->user->mob = $request->input('mob');
-        $this->user->roleId = 3;
-        $this->user->password = $request->input('password');
-        $this->user->save();
-
+        // return response()->json($request->input('password'));
+        $data = array(
+            'firstname' => $request->input('firstname'),
+            'lastname' => $request->input('lastname'),
+            'email' => $request->input('email'),
+            'mob' => $request->input('mob'),
+            'roleId' => 3,
+            'password' => md5($request->input('password'))
+        );
+        DB::table('users')->insert($data);
 
         $arr = array(
-            
-            'status' => 4
+            'firstname' => $request->input('firstname'),
+            'status' => true,
+            "message" => "successfull Login"
+
         );
         return response()->json($arr);
     }
 
     function showUserData(Request $request)
     {
+        // echo "hi sir ...";
+        // DB::table('users')->select('*')
         return response()->json($request->input());
     }
 
-    function userLogin(Request $request){
+    //########### SAVE TOKEN FUNCTION ################ 
+    function saveToken($userId, $token)
+    {
+        $token_data = array(
+            'user_id' => $userId,
+            'token' => $token
+        );
+        DB::table('tokens')->insert($token_data);
+    }
+
+    //################## USER LOGIN FUNCTION ######################
+    
+    function userLogin(Request $request)
+    {
 
         // request for email and password
         $email = $request->input('email');
-        $password = $request->input('pwd');
-
+        $password =md5($request->input('pwd'));
+        $token = $request->input('token');
+        // return response()->json($request->input());
+        if($email == null){
+            return response()->json(array(
+                'role_id' => 0,
+                'field' => 'login',
+                'token' => $token,
+                "message" => "email can't be null"
+            ));
+        }
         $user = new UserModel();
 
         //select all data where email match 
-        
-        $userDetails = DB::table('user')->where('email', $email);
-        
-       
-        // return response()->json($userDetails);
-        if(strcmp($userDetails->value('password') , $password) == 0){
 
+        $userDetails = DB::table('users')->where('email', $email);
+
+
+        // return response()->json($userDetails);
+        if (strcmp($userDetails->value('password'), $password) == 0) {
+
+            $user_id = $userDetails->value('user_id');
+            $this->saveToken($user_id, $token);
             $roleid = $userDetails->value('roleId');
             $arr = array(
-                'user' => $userDetails->value('firstname'),
+                'role_id' => $roleid,
                 'field' => 'login',
-                'status' => $roleid,
+                'token' => $token,
+                'user' => $userDetails->value('firstname'),
+                "message" => "successfull Login"
             );
             return response()->json($arr);
-        }
-        else{
+        } else {
 
             return response()->json(array(
+                'role_id' => 0,
                 'field' => 'login',
-                'status' => 0,
+                'token' => $token,
+                "message" => "email or password might be wrong"
             ));
         }
     }

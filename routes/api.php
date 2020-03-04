@@ -17,8 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/user', 'EmployeControllere@index');
-Route::get('/getdata', 'EmployeControllere@getdata');
+
 Route::post('/savedata', 'Usercontroller@saveUserData');
 Route::post('/showdata', 'Usercontroller@showUserData');
 Route::post('/login', 'Usercontroller@userLogin');

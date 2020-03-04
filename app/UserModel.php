@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class UserModel extends Model
 {
     //
-    protected $table = "user";
+    protected $table = "users";
     public $timestamps = false;
     
-    protected $fillable =["firstname","lastname","email","mob","password","roleId"];
+    // protected $fillable =["firstname","lastname","email","mob","password","roleId"];
     function getData(){
 
     }
