@@ -19,5 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::post('/savedata', 'Usercontroller@saveUserData');
-Route::post('/showdata', 'Usercontroller@showUserData');
+Route::get('/showdata', 'Usercontroller@showUserData');
 Route::post('/login', 'Usercontroller@userLogin');
+Route::get('/checktoken', "Usercontroller@showUserData")->middleware('checktoken');
