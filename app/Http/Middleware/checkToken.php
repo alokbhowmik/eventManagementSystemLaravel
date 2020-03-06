@@ -21,7 +21,11 @@ class checkToken
         
         if(empty($user_id)){
             
-            return response()->json('Unauthorized',401);
+            return response()->json(array(
+                'id' => 0,
+                'token' => $token,
+                'message' => "You are not a valid user"
+            ),401);
         }
         
         return $next($request);

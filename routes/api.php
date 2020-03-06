@@ -19,6 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::post('/savedata', 'Usercontroller@saveUserData');
-Route::get('/showdata', 'Usercontroller@showUserData');
+Route::get('/viewEmployee', 'EmployeControllere@viewEmployee')->middleware('checktoken');
+Route::get('/deleteEmployee/{id}', 'EmployeControllere@deleteEmployee');
 Route::post('/login', 'Usercontroller@userLogin');
 Route::get('/checktoken', "Usercontroller@showUserData")->middleware('checktoken');
+Route::get('/showevents',"Event@showEvents");
+Route::get('/delete_events/{id}',"Event@deleteEvent");
+Route::get('/viewUsers',"Usercontroller@viewUsers");
+// Route::get('/deleteUser/{id}',"EmployeControllere@deleteEmployee");

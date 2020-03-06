@@ -11,6 +11,7 @@ class Usercontroller extends Controller
 {
     private $user;
     
+
     function  __construct()
     {
         $this->user = new UserModel();
@@ -39,7 +40,8 @@ class Usercontroller extends Controller
                 'email' => $email,
                 'mob' => $request->input('mob'),
                 'roleId' =>(int)$request->input('roleid'),
-                'password' => md5($request->input('password'))
+                'password' => md5($request->input('password')),
+                'status'=> 0
             );
             DB::table('users')->insert($data);
     
@@ -136,5 +138,14 @@ class Usercontroller extends Controller
             $token .= $ranstr[rand(0,strlen($ranstr)-1)];
         }
         return $token;
+    }
+    //################ VIEW USERES #################### 
+    function viewUsers(){
+        return DB::table('users')->select('user_id','firstname','lastname','email','mob')->where('roleId',3)->where('status',0)->get();
+        
+    }
+    //################ DELETE USERES #################### 
+    public function deleteUser(){
+        
     }
 }
