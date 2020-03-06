@@ -26,4 +26,5 @@ Route::get('/checktoken', "Usercontroller@showUserData")->middleware('checktoken
 Route::get('/showevents',"Event@showEvents");
 Route::get('/delete_events/{id}',"Event@deleteEvent");
 Route::get('/viewUsers',"Usercontroller@viewUsers");
+Route::post('/addevent', "Event@addEvent");
 // Route::get('/deleteUser/{id}',"EmployeControllere@deleteEmployee");

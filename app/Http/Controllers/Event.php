@@ -16,6 +16,24 @@ class Event extends Controller
         $this->evt = new Events();
     }
 
+    ################### ADD EVENTS ###################### 
+    public function addEvent(Request $request){
+        $data = array(
+            "eventName" => $request->input('eventName'),
+            "eventVenue" => $request->input('eventVenue'),
+            "total_seat" => $request->input('totalSit'),
+            "banner" => $request->input('eventBanner'),
+            "userId" => 1,
+            "avalable_sit" => $request->input('totalSit'),
+            "event_date" => $request->input('eventDate'),
+            "event_time" => $request->input('eventTime'),
+            "status" => 0
+        );
+        DB::table('events')->insert($data);
+        return response()->json(array(
+            "message" => "data inserted successfully"
+        ));
+    } 
     ################### SHOW EVENTS ##################### 
     function showEvents(){
         return $this->evt::all()->where('status',0)->toArray();
