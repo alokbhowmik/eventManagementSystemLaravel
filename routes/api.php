@@ -22,7 +22,7 @@ Route::post('/savedata', 'Usercontroller@saveUserData');
 Route::get('/viewEmployee', 'EmployeControllere@viewEmployee')->middleware('checktoken');
 Route::get('/deleteEmployee/{id}', 'EmployeControllere@deleteEmployee');
 Route::post('/login', 'Usercontroller@userLogin');
-Route::get('/checktoken', "Usercontroller@showUserData")->middleware('checktoken');
+Route::get('/me', "Usercontroller@showUserData")->middleware('checktoken');
 Route::get('/showevents',"Event@showEvents");
 Route::get('/delete_events/{id}',"Event@deleteEvent");
 Route::get('/viewUsers',"Usercontroller@viewUsers");

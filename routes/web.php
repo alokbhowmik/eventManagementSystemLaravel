@@ -14,7 +14,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/user', 'EmployeControllere@index');
-Route::get('/getdata', 'EmployeControllere@getdata');
-Route::get('/savedata', 'Usercontroller@saveUserData');
-Route::post('/showdata', 'Usercontroller@showUserData');
